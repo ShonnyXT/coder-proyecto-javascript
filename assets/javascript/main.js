@@ -1,3 +1,4 @@
+confirm ('Bienvenidos a Prestamos Online, ¿desea adquirir un prestamo?')
 
 let num = parseInt(prompt('Ingrese el monto del prestamo','100000'));
 let cuotas = parseInt(prompt('Ingrese cantidad de cuotas','36'))
