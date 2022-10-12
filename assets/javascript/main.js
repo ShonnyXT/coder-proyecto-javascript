@@ -1,3 +1,5 @@
+alert('Bienvenido al simulador para crear historias clinicas')
+
 // objeto
 class Person {
     // Caracteristicas de historias clinicas
@@ -8,11 +10,10 @@ class Person {
     }
 
     // Metodos
-    saludar() {
+    /* saludar() {
         console.log(`Hola, soy ${this.name}`)
-    }
+    } */
 }
-
 
 let pacientes = []
 
@@ -26,8 +27,13 @@ do {
 } while ( confirm ('¿Desea crear otra?'))
 
 // listado de historias clinicas
-pacientes.forEach(element => console.log(`Nomnre y Apellido: ${element.name} DNI: ${element.dni} Fecha de Nacimiento: ${element.fecha}`));
-
+pacientes.forEach(element => console.log(`Nomnre y Apellido: ${element.name}, DNI: ${element.dni}, Fecha de Nacimiento: ${element.fecha}`));
 
 
 // buscador de historias clinicas
+if (confirm('¿Desea buscar en el historial?')) {
+    let buscar = prompt('Introdusca algun dato')
+    if (pacientes == buscar){
+        console.log(element)
+    } else(alert('No existe'))
+} else(alert('Gracias'))
