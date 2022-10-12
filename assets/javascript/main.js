@@ -1,72 +1,71 @@
-confirm ('Bienvenidos a Prestamos Online, ¿desea adquirir un prestamo?')
 
-let num = parseInt(prompt('Ingrese el monto del prestamo','100000'));
-let cuotas = parseInt(prompt('Ingrese cantidad de cuotas','36'))
-let mensaje;
+// crear varios objetos con prompt
 
-// calculadora de prestamos
-const verificar = (numero) => {
-    num = numero
-    if ( !isNaN(num) ) {
-        if (num >= 10000 && num <= 100000) {
-            /* intereses */
-            if (cuotas <= 12) {
-                mensaje = alert (Math.floor((num * (1.5)) / cuotas))
-            }else{
-                if (cuotas >= 13 && cuotas <= 24 ) {
-                    mensaje = alert (Math.floor((num * 2) / cuotas))
-                }else{
-                    if (cuotas >= 25 && cuotas <= 36) {
-                        mensaje = alert (Math.floor((num * 3) / cuotas))
-                    }else{
-                        alert ('Solo se financia hasta 36 cuotas')
-                        verificar (num)
-                    }
-                }
-            }
-            // Switch de cuotas //
-            /* switch (cuotas) {
-                case (12 , 11):
-                    mensaje = alert (Math.floor((num * 2) / cuotas))
-                break;
-                case (10 , 9):
-                    mensaje = alert (Math.floor((num * 2) / cuotas))
-                break;
-                case (8 , 7):
-                    mensaje = alert (Math.floor((num * 2) / cuotas))
-                break;
-                case (6 , 5):
-                    mensaje = alert (Math.floor((num * (1.5)) / cuotas))
-                break;
-                case (4 , 3):
-                    mensaje = alert (Math.floor((num * (1.5)) / cuotas))
-                break;
-                case (2 , 1):
-                    mensaje = alert (Math.floor((num * (1.5)) / cuotas))
-                break;
-                default: alert ('Solo se financia hasta 12 cuotas')
-                    break;
-            } */
-        }else{
-            if (num < 10000) {
-                mensaje = alert ('El prestamo esta fuera de rango')
-                num = parseInt(prompt('Ingrese un monto entre 10.000 y 100.000','100000'))
-                cuotas = parseInt(prompt('Ingrese cantidad de cuotas','36'))
-            }else{
-                while (num > 100000) {
-                    mensaje = alert ('El prestamo esta fuera de rango')
-                    num = parseInt(prompt('Ingrese un monto entre 10.000 y 100.000','100000'))
-                    cuotas = parseInt(prompt('Ingrese cantidad de cuotas','36'))
-                }
-                verificar (num)
-            }
-            verificar (num)
-        }
-    }else{
-        mensaje = alert ('Debes ingresar solo numeros')
-        num = parseInt(prompt('Ingrese el monto de prestamo','100000'))
-        cuotas = parseInt(prompt('Ingrese cantidad de cuotas','36'))
-        verificar (num)
+/* var nombre = prompt("Indique su nombre");
+var edad = prompt("Indique su edad");
+
+function Usuario (nombre, edad) {
+      this.nombre = nombre;
+      this.edad = edad;
+};
+
+var nuevoUsuario = new Usuario(nombre, edad);
+
+console.log(nuevoUsuario.nombre);
+console.log(nuevoUsuario.edad);
+
+var nombre2 = prompt("Indique su nombre");
+var edad2 = prompt("Indique su edad");
+
+var nuevoUsuario2 = new Usuario(nombre2, edad2);
+
+console.log(nuevoUsuario2);
+
+//*VARIAS PROMPT EN UNA VARIABLE
+
+var usuario = {
+      nombre: prompt ("Indique su nombre"),
+      edad: prompt ("Indique su edad")
+}
+
+console.log() */
+
+
+
+
+
+
+// objeto
+class Person {
+    // Caracteristicas de historias clinicas
+    constructor(name, dni, fecha) {
+        this.name = name
+        this.dni = dni
+        this.fecha = fecha
+    }
+
+    // Metodos
+    saludar() {
+        console.log(`Hola, soy ${this.name}`)
     }
 }
-verificar (num)
+
+Person.saluda()
+
+let pacientes = []
+
+// ingresando datos para crear objetos
+do {
+    let name = prompt('Ingrese nombre y apellido: ');
+    let dni = prompt('Ingrese Dni: ');
+    let fecha = prompt('Ingrese fecha de nacimiento: ');
+    let person = new Person (name, dni, fecha);
+    pacientes.push(person);
+} while ( confirm ('¿Desea crear otra?'))
+
+// listado de historias clinicas
+pacientes.forEach(element => console.log(`Nomnre y Apellido: ${element.name} DNI: ${element.dni} Fecha de Nacimiento: ${element.fecha}`));
+
+
+
+// buscador de historias clinicas
