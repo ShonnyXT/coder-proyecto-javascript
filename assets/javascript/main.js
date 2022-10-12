@@ -1,40 +1,3 @@
-
-// crear varios objetos con prompt
-
-/* var nombre = prompt("Indique su nombre");
-var edad = prompt("Indique su edad");
-
-function Usuario (nombre, edad) {
-      this.nombre = nombre;
-      this.edad = edad;
-};
-
-var nuevoUsuario = new Usuario(nombre, edad);
-
-console.log(nuevoUsuario.nombre);
-console.log(nuevoUsuario.edad);
-
-var nombre2 = prompt("Indique su nombre");
-var edad2 = prompt("Indique su edad");
-
-var nuevoUsuario2 = new Usuario(nombre2, edad2);
-
-console.log(nuevoUsuario2);
-
-//*VARIAS PROMPT EN UNA VARIABLE
-
-var usuario = {
-      nombre: prompt ("Indique su nombre"),
-      edad: prompt ("Indique su edad")
-}
-
-console.log() */
-
-
-
-
-
-
 // objeto
 class Person {
     // Caracteristicas de historias clinicas
@@ -50,7 +13,6 @@ class Person {
     }
 }
 
-Person.saluda()
 
 let pacientes = []
 
