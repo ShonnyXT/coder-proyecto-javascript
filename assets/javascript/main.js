@@ -1,263 +1,106 @@
-alert('Bienvenido al simulador para crear historias clinicas')
+const contenedorProductos = document.getElementById('contenedor-productos')
 
-// objeto
-class Person {
-    // Caracteristicas de historias clinicas
-    constructor(name, secondName, lastName, dni, fecha, obraSocial, numeroHistoria) {
-        this.name = name
-        this.secondName = secondName
-        this.lastName = lastName
-        this.dni = dni
-        this.fecha = fecha
-        this.obraSocial = obraSocial
-        this.numeroHistoria = numeroHistoria
+const contenedorCarrito = document.getElementById('carrito-contenedor')
+const botonVaciar = document.getElementById('vaciar-carrito')
+const contadorCarrito = document.getElementById('contadorCarrito')
+
+const cantidad = document.getElementById('cantidad')
+const precioTotal = document.getElementById('precioTotal')
+const cantidadTotal = document.getElementById('cantidadTotal')
+
+let carrito = []
+
+// STORAGE
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('carrito')) {
+        carrito = JSON.parse(localStorage.getItem('carrito'))
+        actualizarCarrito()
     }
+})
 
-    // Metodos, proximamente porque aun no me da la cabeza para que usarlo
-    /* saludar() {
-        console.log(``)
-    } */
-}
+//BOTON VACIAR
+botonVaciar.addEventListener('click', () => {
+    carrito.length = 0
+    actualizarCarrito()
+})
 
-// arrays con listado de historias clinicas
-let pacientes = []
+// RECORRIDOS E INYECCION EN HTML
+stockProductos.forEach((producto) => {
+    const div = document.createElement('div')
+    div.classList.add('producto')
 
+    div.innerHTML = `
+    <img src=${producto.img} alt= "">
+    <h3>${producto.nombre}</h3>
+    <p>${producto.desc}</p>
+    <p>Talle: ${producto.talle}</p>
+    <p class="precioProducto">Precio:$ ${producto.precio}</p>
+    <button id="agregar${producto.id}" class="boton-agregar">Agregar <i class="fas fa-shopping-cart"></i></button>
+    `
 
-/* let cargarDatos = document.getElementById('cargarDatos')
-cargarDatos.onclick = (event) =>{
-    let name = document.getElementById('nombre').value;
-    let secondName = document.getElementById('segundoNombre').value
-    let lastName = document.getElementById('apellido').value
-    let dni = document.getElementById('dni').value
-    let fecha = document.getElementById('fecha').value;
-    let obraSocial = document.getElementById('obraSocial').value
-    let numeroHistoria = pacientes.length+1
-    let person = new Person (name, secondName, lastName, dni, fecha, obraSocial, numeroHistoria);
-                pacientes.push(person);
-} */
+    contenedorProductos.appendChild(div)
 
-// ingresando datos para crear objetos
-do {
-    let name = prompt('Ingrese nombre');
-    let secondName = prompt('Ingrese segundo nombre')
-    let lastName = prompt('Ingrese Apellido: ')
-    let dni = prompt('Ingrese Dni: ');
-    let fecha = prompt('Ingrese Fecha de Nacimiento: ');
-    let obraSocial = prompt('Ingrese Obra Social')
-    let numeroHistoria = pacientes.length+1
-    let person = new Person (name, secondName, lastName, dni, fecha, obraSocial, numeroHistoria);
-    pacientes.push(person);
-} while ( confirm ('¿Desea crear historia?') )
+    // agregar el carrito con la id del producto
+    const boton = document.getElementById(`agregar${producto.id}`)
 
-// listado de historias clinicas
-pacientes.forEach(element => console.log(`Nombre: ${element.name}, Segundo Nombre: ${element.secondName}, Apellido: ${element.lastName}, DNI: ${element.dni}, Fecha de Nacimiento: ${element.fecha}, Obra Social: ${element.obraSocial}, Historia Clinica Nº: ${element.numeroHistoria}`));
-
-
-// buscador de historias clinicas
-if (confirm('¿Desea usar el buscador de historial clínico?')) {
-
-    // repasando listado
-    pacientes.forEach( (element, index) => {
-
-        // introducir el dato
-        let buscar = prompt('Introdusca algun dato correspondiente')
-
-        // obteniendo resultados en if
-        /* if ( element.name == buscar || element.lastN == buscar || element.dni == buscar || element.fecha == buscar ) {
-            console.log (element)
-        } else (alert('Resultado no existe')) */
-
-        // obtendiendo resultado en switch
-        switch (buscar) {
-            case element.name:
-                console.log(element);
-                break;
-            case element.secondName:
-                console.log(element);
-                break;
-            case element.lastName:
-                console.log(element);
-                break;
-            case element.dni:
-                console.log(element);
-                break;
-            case element.fecha:
-                console.log(element);
-                break;
-            case element.obraSocial:
-                console.log(element);
-                break;
-            case element.numeroHistoria:
-                console.log(element);
-                break;
-            default:
-                console.log('Resultado no existente')
-        }
+    boton.addEventListener('click', () => {
+        agregarAlCarrito(producto.id)
     })
-} else(alert('Gracias'))
-
-// TABLA DE HISTORIAS CLINICAS EN PANTALLA
-const createTable = ( clase, arr ) => {
-    let insertTableDom = document.getElementById('dataInfoTable')
-    // creacion de tabla
-    let createTable = document.createElement('table')
-    let createTableHead = document.createElement('thead')
-    let createTableBody = document.createElement('tbody')
-    // atributos de tabla
-    createTable.setAttribute('class', `table pacientes mb-5 table-dark table-striped`)
-    createTable.setAttribute('id', `tablaPacientes`)
-    createTableHead.setAttribute('class', `pacientes`)
-    createTableBody.setAttribute('class', `pacientes`)
-    // insertando tabla
-    insertTableDom.append(createTable)
-    // creamos etiqueta p el listado
-    let infoTable = document.createElement('p')
-    /* infoTable.innerText = `Primer producto ${arr[0].name} | Ultimo ${arr[pacientes.length-1].name}` */
-    let tabla1 = document.getElementById('tablaPacientes')
-    tabla1.after(infoTable)
-    // juntamos variables tabla y cuerpo
-    let groupTable = [createTableHead, createTableBody]
-    groupTable.forEach((element, index)=>{
-        element.setAttribute('class', `pacientes-${index}`)
-        tabla1.append(element)
-    })
-    // seleccionamos head y body
-    let infoThead = document.querySelector(`.pacientes-0`)
-    let infoTbody = document.querySelector(`.pacientes-1`)
-    infoThead.innerHTML = `<tr>
-    <th scope="col">Nombre</th>
-    <th scope="col">Segundo Nombre</th>
-    <th scope="col">Apellido</th>
-    <th scope="col">DNI</th>
-    <th scope="col">Fecha</th>
-    <th scope="col">Obra Social</th>
-    <th scope="col">Numero de Historia</th>
-    </tr>`
-
-    arr.forEach((element, index) =>{
-        infoTbody.innerHTML += `<tr>
-        <td>${element.name}</td>
-        <td>${element.secondName}</td>
-        <td>${element.lastName}</td>
-        <td>${element.dni}</td>
-        <td>${element.fecha}</td>
-        <td>${element.obraSocial}</td>
-        <td>${element.numeroHistoria}</td>
-    </tr>`
-    })
-}
-createTable('pacientes', pacientes)
-
-let errorNombre = document.getElementById('errorNombre')
-let errorSegundoNombre = document.getElementById('errorSegundoNombre')
-let errorApellido = document.getElementById('errorApellido')
-let errorDni = document.getElementById('errorDni')
-let errorFecha = document.getElementById('errorFecha')
-let errorObraSocial = document.getElementById('errorObraSocial')
-errorNombre.style.display = 'none'
-errorSegundoNombre.style.display = 'none'
-errorApellido.style.display = 'none'
-errorDni.style.display = 'none'
-errorFecha.style.display = 'none'
-errorObraSocial.style.display = 'none'
-
-// Funcion de Validar
-const checkLetra = (val)=>{
-    if(/[a-zA-Z]+$/.test(val) && val.length >= 1){
-        return true
-    }
-    return false
-}
-const checkNumero = (val)=>{
-    let number = parseInt(val)
-    if(/^[0-9]/g.test(number) && typeof number==='number'){
-        return true
-    }
-    return false
-}
-// Eventos de Inputs y Validacion
-nombre.addEventListener('input', (event)=>{
-    let validaNombre = checkLetra(event.target.value)
-    if(validaNombre){
-        errorNombre.style.display = 'none'
-        errorNombre.innerHTML = ``
-    }else{
-        errorNombre.style.display = 'block'
-        errorNombre.innerHTML = `Debe ingresar solo letras`
-    }
 })
-segundoNombre.addEventListener('input', (event)=>{
-    let validaSegundoNombre = checkLetra(event.target.value)
-    if(validaSegundoNombre){
-        errorSegundoNombre.style.display = 'none'
-        errorSegundoNombre.innerHTML = ``
-    }else{
-        errorSegundoNombre.style.display = 'block'
-        errorSegundoNombre.innerHTML = `Debe ingresar solo letras`
-    }
-})
-apellido.addEventListener('input', (event)=>{
-    let validaApellido = checkLetra(event.target.value)
-    if(validaApellido){
-        errorApellido.style.display = 'none'
-        errorApellido.innerHTML = ``
-    }else{
-        errorApellido.style.display = 'block'
-        errorApellido.innerHTML = `Debe ingresar solo letras`
-    }
-})
-dni.addEventListener('input', (event)=>{
-    let validaDni = checkNumero(event.target.value)
-    if(validaDni){
-        errorDni.style.display = 'none'
-        errorDni.innerHTML = ``
-    }else{
-        errorDni.style.display = 'block'
-        errorDni.innerHTML = `Debe ingresar solo numeros`
-    }
-})
-fecha.addEventListener('input', (event)=>{
-    let validaFecha = checkNumero(event.target.value)
-    if(validaFecha){
-        errorFecha.style.display = 'none'
-        errorFecha.innerHTML = ``
-    }else{
-        errorFecha.style.display = 'block'
-        errorFecha.innerHTML = `Debe ingresar solo numeros`
-    }
-})
-obraSocial.addEventListener('input', (event)=>{
-    let validaObraSocial = checkLetra(event.target.value)
-    if(validaObraSocial){
-        errorObraSocial.style.display = 'none'
-        errorObraSocial.innerHTML = ``
-    }else{
-        errorObraSocial.style.display = 'block'
-        errorObraSocial.innerHTML = `Debe ingresar solo numeros`
-    }
-})
-//...
 
-// Eventos de Formulario
-if(typeof window === 'object'){
-    // Inicio del DOMContentLoader
-    window.addEventListener('DOMContentLoaded',()=>{
-        let formulario = document.getElementById('formulario')
-        formulario.addEventListener('submit', (event)=>{
-            event.preventDefault()
-            let nombre = document.getElementById('nombre').value
-            let segundoNombre = document.getElementById('segundoNombre').value
-            let apellido = document.getElementById('apellido').value
-            let dni = document.getElementById('dni').value
-            let fecha = document.getElementById('fecha').value
-            let obraSocial = document.getElementById('obraSocial').value
+// AGREGANDO AL CARRITO
+const agregarAlCarrito = (prodId) => {
+    // evitar repeticion en carrito
+    const existe = carrito.some (prod => prod.id === prodId)
 
-            if (nombre && segundoNombre && apellido && dni && fecha && obraSocial || nombre && apellido && dni && fecha && obraSocial){
-                alert('cargado')
-            }else{
-                alert('datos no ingresados')
+    if (existe){
+        const prod = carrito.map (prod => {
+            if (prod.id === prodId){
+                prod.cantidad++
             }
         })
+    } else {
+        const item = stockProductos.find((prod) => prod.id === prodId)
+        carrito.push(item)
+    }
+    actualizarCarrito()
+}
+
+// ELIMINACION DE PRODUCTOS
+const eliminarDelCarrito = (prodId) => {
+    const item = carrito.find((prod) => prod.id === prodId)
+
+    const indice = carrito.indexOf(item) 
+
+    carrito.splice(indice, 1)
+
+    actualizarCarrito()
+    console.log(carrito)
+}
+
+// ACTUALIZACION DEL CARRITO
+const actualizarCarrito = () => {
+    contenedorCarrito.innerHTML = ""
+
+    carrito.forEach((prod) => {
+        const div = document.createElement('div')
+        div.className = ('productoEnCarrito')
+        div.innerHTML = `
+        <p>${prod.nombre}</p>
+        <p>Precio:$${prod.precio}</p>
+        <p>Cantidad: <span id="cantidad">${prod.cantidad}</span></p>
+        <button onclick="eliminarDelCarrito(${prod.id})" class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
+        `
+
+        contenedorCarrito.appendChild(div)
         
+        // storage
+        localStorage.setItem('carrito', JSON.stringify(carrito))
+
     })
+    //contador para igualar carrito
+    contadorCarrito.innerText = carrito.length 
+
+    // TOTAL DE COMPRAS
+    precioTotal.innerText = carrito.reduce((acc, prod) => acc + prod.cantidad * prod.precio, 0)
 }
